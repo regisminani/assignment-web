@@ -3,6 +3,7 @@ import { useState } from "react";
 function LecturerForm() {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [error, setError] = useState("");
 
   const validateInputs = (email, phoneNumber) => {
     let result = "";
@@ -15,10 +16,14 @@ function LecturerForm() {
     if (!/^\d+$/.test(phoneNumber)) {
       result += "\nPhone number must be numeric!";
     }
-    return result;
+    setError(result);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    validateInputs(email, phoneNumber);
   };
   return (
-    <form className="comp" onSubmit={(e) => e.preventDefault()}>
+    <form className="styled-form comp" onSubmit={handleSubmit}>
       <h2>Registration Form for Lecturers</h2>
       <label htmlFor="name">Name: </label>
       <input type="text" id="name" name="name" required />
@@ -42,9 +47,7 @@ function LecturerForm() {
         onChange={(e) => setPhoneNumber(e.target.value)}
       />
       <br />
-      <p style={{ color: "red", fontSize: "14px" }}>
-        {validateInputs(email, phoneNumber)}
-      </p>
+      <p style={{ color: "red", fontSize: "14px" }}>{error}</p>
       <button type="submit">Submit</button>
     </form>
   );

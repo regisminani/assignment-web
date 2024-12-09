@@ -2,13 +2,18 @@ import { useState } from "react";
 
 function BookForm() {
   const [publishedYear, setPublishedYear] = useState("");
+  const [error, setError] = useState("");
   const validateInputs = (year) => {
     const fourDigitRegex = /^\d{4}$/;
     if (!fourDigitRegex.test(year))
-      return "The Published Year must be a four digit number!";
+      setError("The Published Year must be a four digit number!");
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    validateInputs(publishedYear);
   };
   return (
-    <form className="comp" onSubmit={(e) => e.preventDefault()}>
+    <form className="styled-form comp" onSubmit={handleSubmit}>
       <h2>Registration Form for Books</h2>
       <label htmlFor="title">Book Title: </label>
       <input type="text" id="title" name="title" required />
@@ -27,9 +32,7 @@ function BookForm() {
         onChange={(e) => setPublishedYear(e.target.value)}
       />
       <br />
-      <p style={{ color: "red", fontSize: "14px" }}>
-        {validateInputs(publishedYear)}
-      </p>
+      <p style={{ color: "red", fontSize: "14px" }}>{error}</p>
       <button type="submit">Submit</button>
     </form>
   );

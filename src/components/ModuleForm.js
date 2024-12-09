@@ -2,11 +2,16 @@ import { useState } from "react";
 
 function ModuleForm() {
   const [credits, setCredits] = useState("");
+  const [error, setError] = useState("");
   const validateInputs = (credits) => {
-    if (!/^\d+$/.test(credits)) return "The Credits field must be numeric!";
+    if (!/^\d+$/.test(credits)) setError("The Credits field must be numeric!");
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    validateInputs(credits);
   };
   return (
-    <form className="comp" onSubmit={(e) => e.preventDefault()}>
+    <form className="styled-form comp" onSubmit={handleSubmit}>
       <h2>Registration Form for Modules</h2>
       <label htmlFor="name">Module Name: </label>
       <input type="text" id="name" name="name" />
@@ -26,9 +31,7 @@ function ModuleForm() {
         onChange={(e) => setCredits(e.target.value)}
       />
       <br />
-      <p style={{ color: "red", fontSize: "14px" }}>
-        {validateInputs(credits)}
-      </p>
+      <p style={{ color: "red", fontSize: "14px" }}>{error}</p>
       <button type="submit">Submit</button>
     </form>
   );

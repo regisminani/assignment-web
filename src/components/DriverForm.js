@@ -1,6 +1,6 @@
 function DriverForm() {
   return (
-    <form className="comp" onSubmit={(e) => e.preventDefault()}>
+    <form className="styled-form comp" onSubmit={(e) => e.preventDefault()}>
       <h2>Registration Form for Drivers</h2>
       <label htmlFor="name">Name: </label>
       <input type="text" id="name" name="name" required />
@@ -18,7 +18,7 @@ function DriverForm() {
         <option value="motorcyle">Motorcycle</option>
       </select>
       <br />
-
+      <br />
       <button type="submit">Submit</button>
     </form>
   );

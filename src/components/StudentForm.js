@@ -2,13 +2,18 @@ import { useState } from "react";
 
 function StudentForm() {
   const [studentID, setStudentID] = useState("");
+  const [error, setError] = useState("");
   const validateInputs = (studentID) => {
     const alphanumericRegex = /^[a-zA-Z0-9]+$/;
     if (!alphanumericRegex.test(studentID))
-      return "The Studend ID must contain alphanumeric characters!";
+      return setError("The Studend ID must contain alphanumeric characters!");
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    validateInputs(studentID);
   };
   return (
-    <form className="comp" onSubmit={(e) => e.preventDefault()}>
+    <form className="styled-form comp" onSubmit={handleSubmit}>
       <h2>Registration Form for Students</h2>
       <label htmlFor="firstname">First Name: </label>
       <input type="text" id="firstname" name="firstname" required />
@@ -30,9 +35,7 @@ function StudentForm() {
       <label htmlFor="birth">Date of Birth: </label>
       <input type="text" id="birth" name="birth" />
       <br />
-      <p style={{ color: "red", fontSize: "14px" }}>
-        {validateInputs(studentID)}
-      </p>
+      <p style={{ color: "red", fontSize: "14px" }}>{error}</p>
       <button type="submit">Submit</button>
     </form>
   );
